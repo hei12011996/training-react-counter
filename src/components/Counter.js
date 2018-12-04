@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 
 class Counter extends Component {
-  state = {number: 0};
+  constructor(props){
+    super(props)
+    this.state = {number: 0, version: this.props.version};
+  }
 
   incrementCounter = () => {
     this.state.number++;
@@ -18,6 +21,12 @@ class Counter extends Component {
   updateParentCounterGroup = (delta) => {
     this.props.onUpdate(delta);
   };
+
+  componentDidUpdate = (prevProps) => {
+    if (this.props.version != prevProps.version) {
+      this.setState({number: 0, version: this.props.version});
+    }
+  }
 
   render() {
     return (
