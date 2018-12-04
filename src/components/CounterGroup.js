@@ -2,28 +2,35 @@ import React, { Component } from 'react';
 import Counter from './Counter';
 
 class CounterGroup extends Component {
-  state = {sum: 0, count: 0, version: 0};
+  state = {
+            sum: 0,
+            counters: new Array(this.props.gpSize).fill(0).map(() => ({id: new Date().getTime() + Math.random(), count: 0})), 
+            version: 0
+          };
 
   updateSum = (delta) => {
     this.state.sum += delta;
     this.setState(this.state);
-  }
+  };
 
-  updateCount = (count) => {
-    this.state.count = count;
+  updateCount = (id, count) => {
+    let counters = this.state.counters.map(counter => {
+      if (id === counter.id) {
+        return {id: new Date().getTime() + Math.random(), count: count};
+      } else {
+        return counter;
+      }
+    });
+    this.state.counters = counters;
     this.setState(this.state);
-  }
-
-  componentDidUpdate = (prevProps) => {
-    if (this.props.gpSize != prevProps.gpSize) {
-      this.setState({sum: 0, version: this.state.version + 1});
-    }
-  }
+  };
 
   render() {
     return (
       <div>
-        {new Array(this.props.gpSize).fill(0).map(() => <Counter count = {this.state.count} onUpdate = {this.updateCount} onUpdateSum = {this.updateSum} version = {this.state.version} />)}
+        {this.state.counters.map((counter) => 
+          <Counter id = {counter.id} count = {counter.count} onUpdate = {this.updateCount} onUpdateSum = {this.updateSum} />
+        )}
         <span>Sum: {this.state.sum}</span>
       </div>
     );

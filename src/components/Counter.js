@@ -7,19 +7,13 @@ class Counter extends Component {
 
   incrementCounter = () => {
     this.props.onUpdateSum(+1);
-    this.props.onUpdate(this.props.count + 1);
+    this.props.onUpdate(this.props.id, this.props.count + 1);
   };
 
   decrementCounter = () => {
     this.props.onUpdateSum(-1);
-    this.props.onUpdate(this.props.count - 1);
+    this.props.onUpdate(this.props.id, this.props.count - 1);
   };
-
-  componentDidUpdate = (prevProps) => {
-    if (this.props.version != prevProps.version) {
-      this.setState({number: 0, version: this.props.version});
-    }
-  }
 
   render() {
     return (

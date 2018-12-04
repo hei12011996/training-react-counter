@@ -24,7 +24,7 @@ class App extends Component {
     return (
     	<div>
     		<CounterGroupInput refreshCounter={this.refreshCounter} ref="CounterGroupInput" />
-      	<CounterGroup gpSize={this.state.gpSize} ref="CounterGroup" />
+      	<CounterGroup key={new Date().getTime() + Math.random()} gpSize={this.state.gpSize} />
     	</div>
     );
   }
