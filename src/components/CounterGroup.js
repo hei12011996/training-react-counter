@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import Counter from './Counter';
 
 class CounterGroup extends Component {
-  state = {sum: 0, version: 0};
+  state = {sum: 0, count: 0, version: 0};
 
   updateSum = (delta) => {
     this.state.sum += delta;
+    this.setState(this.state);
+  }
+
+  updateCount = (count) => {
+    this.state.count = count;
     this.setState(this.state);
   }
 
@@ -18,7 +23,7 @@ class CounterGroup extends Component {
   render() {
     return (
       <div>
-        {new Array(this.props.gpSize).fill(0).map(() => <Counter onUpdate = {this.updateSum} version = {this.state.version} />)}
+        {new Array(this.props.gpSize).fill(0).map(() => <Counter count = {this.state.count} onUpdate = {this.updateCount} onUpdateSum = {this.updateSum} version = {this.state.version} />)}
         <span>Sum: {this.state.sum}</span>
       </div>
     );
